@@ -1,0 +1,10 @@
+    1  cd ~/w205/project-2-elizkhan
+    2  docker-compose up -d 
+    3  docker-compose ps
+    4  docker-compose logs zookeeper | grep -i binding
+    5  docker-compose exec kafka kafka-topics --create --topic assessment --partitions 1 --replication-factor 1 --if-not-exists --zookeeper zookeeper:32181
+    6  docker-compose exec kafka kafka-topics --describe --topic assessment --zookeeper zookeeper:32181
+    7  docker-compose exec mids bash -c "cat /w205/project-2-elizkhan/assessment-attempts-20180128-121051-nested.json | jq '.[]' -c | kafkacat -P -b kafka:29092 -t assessment"
+    8  docker-compose exec spark env PYSPARK_DRIVER_PYTHON=jupyter PYSPARK_DRIVER_PYTHON_OPTS='notebook --no-browser --port 8888 --ip 0.0.0.0 --allow-root' pyspark
+    9  docker-compose down
+   10  history > elizkhan-history.txt
